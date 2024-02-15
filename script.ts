@@ -1,8 +1,10 @@
 const submitButton = document.getElementById('submit-button') as HTMLButtonElement
-const logoShowcase = document.getElementById('logo-showcase') as HTMLImageElement
+const sortButton = document.getElementById('sort-rank') as HTMLButtonElement
 const logoShowcaseSelect = document.getElementById('category') as HTMLSelectElement
+const logoShowcase = document.getElementById('logo-showcase') as HTMLImageElement
 const ideasContainer = document.getElementById('idea-container') as HTMLDivElement
 let ideas: Idea[] = []
+let ranked = false
 
 type Idea = {
 	name: string
@@ -40,68 +42,81 @@ const render = (): void => {
 	storageGet()
 	ideasContainer.innerHTML = ''
 
-	ideas.forEach((object: Idea, index: number): void => {
-		const ideaCard = document.createElement('div') as HTMLDivElement
-		const categoryLogo = document.createElement('img') as HTMLImageElement
+	//sorting
+	const rankedArray: Idea[] = ranked ? ideas.sort((a: Idea, b: Idea) => b.rank - a.rank) : ideas
+
+	rankedArray.forEach((idea: Idea, index: number): void => {
+		const ideaCardDiv = document.createElement('div') as HTMLDivElement
+		const interactionsDiv = document.createElement('div') as HTMLDivElement
+		const rankNumDiv = document.createElement('div') as HTMLDivElement
+		const rankDiv = document.createElement('div') as HTMLDivElement
+
+		const rankDown = document.createElement('img') as HTMLImageElement
+		const rankUp = document.createElement('img') as HTMLImageElement
 		const name = document.createElement('h2') as HTMLHeadingElement
-		const description = document.createElement('h3') as HTMLHeadingElement
-		const interactions = document.createElement('div') as HTMLDivElement
 		const checkBox = document.createElement('input') as HTMLInputElement
+		const categoryLogo = document.createElement('img') as HTMLImageElement
+		const rankNumber = document.createElement('h4') as HTMLHeadingElement
+		const description = document.createElement('h3') as HTMLHeadingElement
 		const deleteBtn = document.createElement('Button') as HTMLButtonElement
 
-		const rank = document.createElement('div') as HTMLDivElement
-		const rankUp = document.createElement('img') as HTMLImageElement
-		const rankDown = document.createElement('img') as HTMLImageElement
-		const rankNumber = document.createElement('h4') as HTMLHeadingElement
-		const rankNumDiv = document.createElement('div') as HTMLDivElement
-
-		rankNumber.textContent = String(object.rank)
-		name.textContent = object.name
-		description.textContent = object.description
-		categoryLogo.src = object.categoryImg
 		checkBox.type = 'checkbox'
-		checkBox.checked = object.checkBox
+		name.textContent = idea.name
 		deleteBtn.textContent = 'Delete'
+		checkBox.checked = idea.checkBox
+		categoryLogo.src = idea.categoryImg
+		rankNumber.textContent = String(idea.rank)
+		description.textContent = idea.description
 		rankUp.src = 'assets/img/mdi_arrow-up-bold.svg'
 		rankDown.src = 'assets/img/mdi_arrow-down-bold.svg'
 
-		rank.id = 'rank'
-		interactions.id = 'interactions'
-		ideaCard.id = 'idea-card'
+		interactionsDiv.id = 'interactions'
+		ideaCardDiv.id = 'idea-card'
 		categoryLogo.id = 'c-logo'
-		checkBox.id = 'check'
 		rankNumDiv.id = 'rankNum'
+		checkBox.id = 'check'
+		rankDiv.id = 'rank'
 
-		checkBox.addEventListener('change', () => {
-			checkBox.checked ? (ideaCard.style.opacity = '0.5') : (ideaCard.style.opacity = '1')
+		checkBox.addEventListener('change', (): void => {
+			checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
+			idea.checkBox = !idea.checkBox
+			storageSet()
 		})
+		checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
 
-		deleteBtn.addEventListener('click', () => {
+		deleteBtn.addEventListener('click', (): void => {
 			ideas.splice(index, 1)
 			storageSet()
 			render()
 		})
 
-		rankUp.addEventListener('click', () => {
-			object.rank >= 10 ? (object.rank = 10) : object.rank++
+		rankUp.addEventListener('click', (): void => {
+			idea.rank >= 10 ? (idea.rank = 10) : idea.rank++
 			storageSet()
 			render()
 		})
 
-		rankDown.addEventListener('click', () => {
-			object.rank <= 0 ? (object.rank = 0) : object.rank--
+		rankDown.addEventListener('click', (): void => {
+			idea.rank <= 0 ? (idea.rank = 0) : idea.rank--
 			storageSet()
 			render()
 		})
 
 		rankNumDiv.append(rankNumber)
-		rank.append(rankUp, rankDown)
-		interactions.append(checkBox, rank, deleteBtn)
-		ideaCard.append(rankNumDiv, categoryLogo, name, description, interactions)
-		ideasContainer.append(ideaCard)
+		rankDiv.append(rankUp, rankDown)
+		interactionsDiv.append(rankNumDiv, rankDiv, deleteBtn)
+		ideaCardDiv.append(checkBox, categoryLogo, name, description, interactionsDiv)
+		ideasContainer.append(ideaCardDiv)
 	})
 }
 
+sortButton.addEventListener('click', () => {
+	ranked = !ranked
+	ranked
+		? (sortButton.style.backgroundColor = 'rgb(21,21,21)')
+		: (sortButton.style.backgroundColor = 'rgb(126,126,126)')
+	render()
+})
 logoShowcaseSelect.addEventListener('change', (): void => {
 	logoShowcase.src = `/assets/img/${logoShowcaseSelect.value}.svg`
 })

@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -34,7 +34,7 @@ body {
 .inputs {
     border-radius: 5px;
     background-color: gray;
-    font-size: 25px ;
+    font-size: 25px;
 }
 
 #idea-container {
@@ -42,6 +42,7 @@ body {
     margin-left: 350px;
     height: 100vh;
     width: auto;
+    background-color: #1e1e1e;
 }
 
 #submit-button {
@@ -69,7 +70,7 @@ body {
     width: 200px;
     position: relative;
     border-radius: 10px;
-    overflow: clip;
+    overflow: clip; /* Assuming this is meant to be 'overflow: hidden;' */
 }
 
 #c-logo {
@@ -104,21 +105,22 @@ h2 {
 }
 
 h3 {
-   color: #999999;
+    color: #999999;
 }
+
 h4 {
     color: #171717;
     font-weight: 500;
 }
 
-
+#check {
+    position: absolute;
+    top: 4%;
+    left: 4%;
+}
 
 #check:checked {
     accent-color: #6f0808;
-}
-
-#rank {
-
 }
 
 #interactions {
@@ -141,16 +143,21 @@ h4 {
     text-align: center;
     height: 30px;
     width: 30px;
-    position: absolute;
     top: 4%;
     left: 4%;
     background-image: url('assets/img/star.svg');
     background-position: center;
     background-size: cover;
     color: #171717;
-
 }
 
-#idea-container {
-    background-color: #1e1e1e;
+#sort-rank {
+    position: absolute;
+    top: 4%;
+    right: 3%;
+}
+
+#sort-rank:active {
+    background-color: #fafafa;
+    color: #171717;
 }
