@@ -30,7 +30,7 @@ const create = (): void => {
 	const newIdea: Idea = {
 		name: (document.getElementById('ideaName') as HTMLInputElement).value,
 		description: (document.getElementById('ideaDescription') as HTMLTextAreaElement).value,
-		categoryImg: `/assets/img/${logoShowcaseSelect.value}.svg`,
+		categoryImg: `assets/img/${logoShowcaseSelect.value}.svg`,
 		checkBox: false,
 		rank: 0
 	}

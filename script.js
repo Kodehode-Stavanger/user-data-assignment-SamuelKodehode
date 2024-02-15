@@ -21,7 +21,7 @@ const create = () => {
     const newIdea = {
         name: document.getElementById('ideaName').value,
         description: document.getElementById('ideaDescription').value,
-        categoryImg: `/assets/img/${logoShowcaseSelect.value}.svg`,
+        categoryImg: `assets/img/${logoShowcaseSelect.value}.svg`,
         checkBox: false,
         rank: 0
     };
