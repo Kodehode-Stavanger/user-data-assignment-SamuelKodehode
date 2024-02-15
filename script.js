@@ -1,11 +1,13 @@
 "use strict";
 const submitButton = document.getElementById('submit-button');
 const sortButton = document.getElementById('sort-rank');
+const checkedButton = document.getElementById('hide-checked');
 const logoShowcaseSelect = document.getElementById('category');
 const logoShowcase = document.getElementById('logo-showcase');
 const ideasContainer = document.getElementById('idea-container');
 let ideas = [];
 let ranked = false;
+let hideChecked = false;
 const storageSet = () => {
     localStorage.setItem('savedIdeas', JSON.stringify(ideas));
 };
@@ -29,7 +31,11 @@ const create = () => {
 const render = () => {
     storageGet();
     ideasContainer.innerHTML = '';
-    const rankedArray = ranked ? ideas.sort((a, b) => b.rank - a.rank) : ideas;
+    let rankedArray = [...ideas];
+    if (hideChecked)
+        rankedArray = rankedArray.filter((idea) => !idea.checkBox);
+    if (ranked)
+        rankedArray = rankedArray.sort((a, b) => b.rank - a.rank);
     rankedArray.forEach((idea, index) => {
         const ideaCardDiv = document.createElement('div');
         const interactionsDiv = document.createElement('div');
@@ -91,6 +97,13 @@ sortButton.addEventListener('click', () => {
     ranked
         ? (sortButton.style.backgroundColor = 'rgb(21,21,21)')
         : (sortButton.style.backgroundColor = 'rgb(126,126,126)');
+    render();
+});
+checkedButton.addEventListener('click', () => {
+    hideChecked = !hideChecked;
+    hideChecked
+        ? (checkedButton.style.backgroundColor = 'rgb(21,21,21)')
+        : (checkedButton.style.backgroundColor = 'rgb(126,126,126)');
     render();
 });
 logoShowcaseSelect.addEventListener('change', () => {
