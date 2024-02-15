@@ -42,7 +42,7 @@ const create = (): void => {
 const render = (): void => {
 	storageGet()
 	while (ideasContainer.firstChild) {
-		ideasContainer.firstChild.remove()
+		ideasContainer.removeChild(ideasContainer.firstChild)
 	}
 
 	let sortedArray: Idea[] = [...ideas]
