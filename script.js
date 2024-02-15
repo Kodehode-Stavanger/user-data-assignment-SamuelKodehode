@@ -31,12 +31,12 @@ const create = () => {
 const render = () => {
     storageGet();
     ideasContainer.innerHTML = '';
-    let rankedArray = [...ideas];
+    let sortedArray = [...ideas];
     if (hideChecked)
-        rankedArray = rankedArray.filter((idea) => !idea.checkBox);
+        sortedArray = sortedArray.filter((idea) => !idea.checkBox);
     if (ranked)
-        rankedArray = rankedArray.sort((a, b) => b.rank - a.rank);
-    rankedArray.forEach((idea, index) => {
+        sortedArray = sortedArray.sort((a, b) => b.rank - a.rank);
+    sortedArray.forEach((idea, index) => {
         const ideaCardDiv = document.createElement('div');
         const interactionsDiv = document.createElement('div');
         const rankNumDiv = document.createElement('div');

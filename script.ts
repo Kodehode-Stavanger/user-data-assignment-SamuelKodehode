@@ -43,12 +43,11 @@ const render = (): void => {
 	storageGet()
 	ideasContainer.innerHTML = ''
 
-	//sorting
-	let rankedArray: Idea[] = [...ideas]
-	if (hideChecked) rankedArray = rankedArray.filter((idea) => !idea.checkBox)
-	if (ranked) rankedArray = rankedArray.sort((a: Idea, b: Idea) => b.rank - a.rank)
+	let sortedArray: Idea[] = [...ideas]
+	if (hideChecked) sortedArray = sortedArray.filter((idea: Idea) => !idea.checkBox)
+	if (ranked) sortedArray = sortedArray.sort((a: Idea, b: Idea) => b.rank - a.rank)
 
-	rankedArray.forEach((idea: Idea, index: number): void => {
+	sortedArray.forEach((idea: Idea, index: number): void => {
 		const ideaCardDiv = document.createElement('div') as HTMLDivElement
 		const interactionsDiv = document.createElement('div') as HTMLDivElement
 		const rankNumDiv = document.createElement('div') as HTMLDivElement

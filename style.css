@@ -11,6 +11,10 @@ body {
     background-color: #171717;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
 #new-input {
     position: fixed;
     left: 0;
@@ -38,11 +42,16 @@ body {
 }
 
 #idea-container {
-    padding: 30px;
     margin-left: 350px;
     min-height: 100vh;
     width: auto;
     background-color: #1e1e1e;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-gap: 30px;
+    padding: 60px 30px 30px;
+    align-items: center;
+    justify-content: center;
 }
 
 #submit-button {
@@ -65,7 +74,6 @@ body {
     align-items: center;
     gap: 14px;
     flex-direction: column;
-    margin-top: 20px;
     height: 300px;
     width: 200px;
     position: relative;
