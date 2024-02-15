@@ -1,9 +1,11 @@
 "use strict";
 const submitButton = document.getElementById('submit-button');
-const logoShowcase = document.getElementById('logo-showcase');
+const sortButton = document.getElementById('sort-rank');
 const logoShowcaseSelect = document.getElementById('category');
+const logoShowcase = document.getElementById('logo-showcase');
 const ideasContainer = document.getElementById('idea-container');
 let ideas = [];
+let ranked = false;
 const storageSet = () => {
     localStorage.setItem('savedIdeas', JSON.stringify(ideas));
 };
@@ -27,59 +29,70 @@ const create = () => {
 const render = () => {
     storageGet();
     ideasContainer.innerHTML = '';
-    ideas.forEach((object, index) => {
-        const ideaCard = document.createElement('div');
-        const categoryLogo = document.createElement('img');
-        const name = document.createElement('h2');
-        const description = document.createElement('h3');
-        const interactions = document.createElement('div');
-        const checkBox = document.createElement('input');
-        const deleteBtn = document.createElement('Button');
-        const rank = document.createElement('div');
-        const rankUp = document.createElement('img');
-        const rankDown = document.createElement('img');
-        const rankNumber = document.createElement('h4');
+    const rankedArray = ranked ? ideas.sort((a, b) => b.rank - a.rank) : ideas;
+    rankedArray.forEach((idea, index) => {
+        const ideaCardDiv = document.createElement('div');
+        const interactionsDiv = document.createElement('div');
         const rankNumDiv = document.createElement('div');
-        rankNumber.textContent = String(object.rank);
-        name.textContent = object.name;
-        description.textContent = object.description;
-        categoryLogo.src = object.categoryImg;
+        const rankDiv = document.createElement('div');
+        const rankDown = document.createElement('img');
+        const rankUp = document.createElement('img');
+        const name = document.createElement('h2');
+        const checkBox = document.createElement('input');
+        const categoryLogo = document.createElement('img');
+        const rankNumber = document.createElement('h4');
+        const description = document.createElement('h3');
+        const deleteBtn = document.createElement('Button');
         checkBox.type = 'checkbox';
-        checkBox.checked = object.checkBox;
+        name.textContent = idea.name;
         deleteBtn.textContent = 'Delete';
+        checkBox.checked = idea.checkBox;
+        categoryLogo.src = idea.categoryImg;
+        rankNumber.textContent = String(idea.rank);
+        description.textContent = idea.description;
         rankUp.src = 'assets/img/mdi_arrow-up-bold.svg';
         rankDown.src = 'assets/img/mdi_arrow-down-bold.svg';
-        rank.id = 'rank';
-        interactions.id = 'interactions';
-        ideaCard.id = 'idea-card';
+        interactionsDiv.id = 'interactions';
+        ideaCardDiv.id = 'idea-card';
         categoryLogo.id = 'c-logo';
-        checkBox.id = 'check';
         rankNumDiv.id = 'rankNum';
+        checkBox.id = 'check';
+        rankDiv.id = 'rank';
         checkBox.addEventListener('change', () => {
-            checkBox.checked ? (ideaCard.style.opacity = '0.5') : (ideaCard.style.opacity = '1');
+            checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1');
+            idea.checkBox = !idea.checkBox;
+            storageSet();
         });
+        checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1');
         deleteBtn.addEventListener('click', () => {
             ideas.splice(index, 1);
             storageSet();
             render();
         });
         rankUp.addEventListener('click', () => {
-            object.rank >= 10 ? (object.rank = 10) : object.rank++;
+            idea.rank >= 10 ? (idea.rank = 10) : idea.rank++;
             storageSet();
             render();
         });
         rankDown.addEventListener('click', () => {
-            object.rank <= 0 ? (object.rank = 0) : object.rank--;
+            idea.rank <= 0 ? (idea.rank = 0) : idea.rank--;
             storageSet();
             render();
         });
         rankNumDiv.append(rankNumber);
-        rank.append(rankUp, rankDown);
-        interactions.append(checkBox, rank, deleteBtn);
-        ideaCard.append(rankNumDiv, categoryLogo, name, description, interactions);
-        ideasContainer.append(ideaCard);
+        rankDiv.append(rankUp, rankDown);
+        interactionsDiv.append(rankNumDiv, rankDiv, deleteBtn);
+        ideaCardDiv.append(checkBox, categoryLogo, name, description, interactionsDiv);
+        ideasContainer.append(ideaCardDiv);
     });
 };
+sortButton.addEventListener('click', () => {
+    ranked = !ranked;
+    ranked
+        ? (sortButton.style.backgroundColor = 'rgb(21,21,21)')
+        : (sortButton.style.backgroundColor = 'rgb(126,126,126)');
+    render();
+});
 logoShowcaseSelect.addEventListener('change', () => {
     logoShowcase.src = `/assets/img/${logoShowcaseSelect.value}.svg`;
 });
