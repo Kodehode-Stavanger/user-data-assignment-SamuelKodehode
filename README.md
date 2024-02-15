@@ -1,3 +1,4 @@
+https://kodehode-stavanger.github.io/user-data-assignment-SamuelKodehode/
 # Awesome Idea Tracker 🚀
 
 Welcome to the Awesome Idea Tracker repository! This brilliant piece of code helps you manage your million-dollar ideas without breaking a sweat. Keep track of your genius thoughts, sort them like a pro, and, of course, add a pinch of humor to your coding life.
