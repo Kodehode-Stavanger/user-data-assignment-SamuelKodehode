@@ -41,7 +41,9 @@ const create = (): void => {
 
 const render = (): void => {
 	storageGet()
-	ideasContainer.innerHTML = ''
+	while (ideasContainer.firstChild) {
+		ideasContainer.firstChild.remove()
+	}
 
 	let sortedArray: Idea[] = [...ideas]
 	if (hideChecked) sortedArray = sortedArray.filter((idea: Idea) => !idea.checkBox)

@@ -30,7 +30,9 @@ const create = () => {
 };
 const render = () => {
     storageGet();
-    ideasContainer.innerHTML = '';
+    while (ideasContainer.firstChild) {
+        ideasContainer.firstChild.remove();
+    }
     let sortedArray = [...ideas];
     if (hideChecked)
         sortedArray = sortedArray.filter((idea) => !idea.checkBox);
