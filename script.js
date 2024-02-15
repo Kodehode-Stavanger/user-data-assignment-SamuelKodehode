@@ -27,6 +27,9 @@ const create = () => {
     };
     ideas.push(newIdea);
     storageSet();
+    document.getElementById('ideaName').value = '';
+    document.getElementById('ideaDescription').value = '';
+    render();
 };
 const draw = () => {
     storageGet();

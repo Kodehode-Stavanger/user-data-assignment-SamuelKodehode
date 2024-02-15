@@ -37,6 +37,11 @@ const create = (): void => {
 
 	ideas.push(newIdea)
 	storageSet()
+
+	;(document.getElementById('ideaName') as HTMLInputElement).value = ''
+	;(document.getElementById('ideaDescription') as HTMLTextAreaElement).value = ''
+
+	render()
 }
 
 const draw = (): void => {
