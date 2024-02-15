@@ -39,11 +39,8 @@ const create = (): void => {
 	storageSet()
 }
 
-const render = (): void => {
+const draw = (): void => {
 	storageGet()
-	while (ideasContainer.firstChild) {
-		ideasContainer.removeChild(ideasContainer.firstChild)
-	}
 
 	let sortedArray: Idea[] = [...ideas]
 	if (hideChecked) sortedArray = sortedArray.filter((idea: Idea) => !idea.checkBox)
@@ -138,5 +135,12 @@ submitButton.addEventListener('click', (): void => {
 	create()
 	render()
 })
+
+function render() {
+	while (ideasContainer.firstChild) {
+		ideasContainer.firstChild.remove()
+	}
+	draw()
+}
 
 render()

@@ -28,11 +28,8 @@ const create = () => {
     ideas.push(newIdea);
     storageSet();
 };
-const render = () => {
+const draw = () => {
     storageGet();
-    while (ideasContainer.firstChild) {
-        ideasContainer.removeChild(ideasContainer.firstChild);
-    }
     let sortedArray = [...ideas];
     if (hideChecked)
         sortedArray = sortedArray.filter((idea) => !idea.checkBox);
@@ -115,5 +112,11 @@ submitButton.addEventListener('click', () => {
     create();
     render();
 });
+function render() {
+    while (ideasContainer.firstChild) {
+        ideasContainer.firstChild.remove();
+    }
+    draw();
+}
 render();
 //# sourceMappingURL=script.js.map
