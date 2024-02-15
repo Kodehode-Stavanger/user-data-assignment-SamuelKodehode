@@ -5,6 +5,7 @@ const checkedButton = document.getElementById('hide-checked');
 const logoShowcaseSelect = document.getElementById('category');
 const logoShowcase = document.getElementById('logo-showcase');
 const ideasContainer = document.getElementById('idea-container');
+let cursor = document.getElementById('cursor');
 let ideas = [];
 let ranked = false;
 let hideChecked = false;
@@ -41,6 +42,7 @@ const render = () => {
         sortedArray = sortedArray.filter((idea) => !idea.checkBox);
     if (ranked)
         sortedArray = sortedArray.sort((a, b) => b.rank - a.rank);
+    console.log(sortedArray);
     sortedArray.forEach((idea, index) => {
         const ideaCardDiv = document.createElement('div');
         const interactionsDiv = document.createElement('div');
@@ -118,5 +120,10 @@ submitButton.addEventListener('click', () => {
     create();
     render();
 });
+document.body.addEventListener('mousemove', function (e) {
+    ;
+    (cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px');
+});
+storageGet();
 render();
 //# sourceMappingURL=script.js.map

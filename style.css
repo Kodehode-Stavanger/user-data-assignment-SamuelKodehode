@@ -5,6 +5,7 @@
     font-family: system-ui;
     font-weight: 150;
     color: ghostwhite;
+    cursor: none;
 }
 
 body {
@@ -35,17 +36,24 @@ body {
     gap: 15px;
 }
 
+option {
+    background-color: #7f7f7f;
+}
+
 .inputs {
     border-radius: 5px;
-    background-color: gray;
     font-size: 25px;
+    background-color: transparent;
+    color:gray ;
+    border: 1px solid #464545;
 }
 
 #idea-container {
     margin-left: 350px;
     min-height: 100vh;
     width: auto;
-    background-color: #1e1e1e;
+    background-image: url("assets/img/Untitled.png");
+    background-size: cover;
     display: grid;
     grid-template-columns: repeat(3, auto);
     grid-gap: 30px;
@@ -56,7 +64,7 @@ body {
 
 #submit-button {
     margin-top: 10px;
-    background-color: #7f7f7f;
+    background-color: #3c3c3c;
     border: none;
     height: 30px;
 }
@@ -78,7 +86,7 @@ body {
     width: 200px;
     position: relative;
     border-radius: 10px;
-    overflow: clip; /* Assuming this is meant to be 'overflow: hidden;' */
+    overflow: clip;
 }
 
 #c-logo {
@@ -156,7 +164,6 @@ h4 {
     background-image: url('assets/img/Star.svg');
     background-position: center;
     background-size: cover;
-    color: #171717;
 }
 
 
@@ -169,4 +176,32 @@ h4 {
     position: absolute;
     top: 4%;
     right: 3%;
+}
+
+
+.cursor {
+    position: fixed;
+    border-radius: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    pointer-events: none;
+    left: -100px;
+    top: 50%;
+    mix-blend-mode: difference;
+    background-color: rgb(255, 255, 255);
+    z-index: 10000;
+    border: 1px solid #000000;
+    height: 20px;
+    width: 20px;
+    transition: all 100ms ease-out;
+}
+
+button:active {
+    box-shadow: 0 0 10px white;
+}
+button:hover {
+    box-shadow: 0 0 2px white;
+}
+
+button{
+    border: none;
 }

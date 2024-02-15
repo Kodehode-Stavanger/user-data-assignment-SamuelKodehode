@@ -4,6 +4,7 @@ const checkedButton = document.getElementById('hide-checked') as HTMLButtonEleme
 const logoShowcaseSelect = document.getElementById('category') as HTMLSelectElement
 const logoShowcase = document.getElementById('logo-showcase') as HTMLImageElement
 const ideasContainer = document.getElementById('idea-container') as HTMLDivElement
+let cursor = document.getElementById('cursor') as HTMLDivElement
 let ideas: Idea[] = []
 let ranked = false
 let hideChecked = false
@@ -18,14 +19,12 @@ type Idea = {
 const storageSet = (): void => {
 	localStorage.setItem('savedIdeas', JSON.stringify(ideas))
 }
-
 const storageGet = (): void => {
 	const isStorage: string | null = localStorage.getItem('savedIdeas')
 	if (isStorage) {
 		ideas = JSON.parse(isStorage)
 	}
 }
-
 const create = (): void => {
 	const newIdea: Idea = {
 		name: (document.getElementById('ideaName') as HTMLInputElement).value,
@@ -34,33 +33,30 @@ const create = (): void => {
 		checkBox: false,
 		rank: 0
 	}
-
 	ideas.push(newIdea)
+
 	storageSet()
 	;(document.getElementById('ideaName') as HTMLInputElement).value = ''
 	;(document.getElementById('ideaDescription') as HTMLTextAreaElement).value = ''
-
 	render()
 }
-
 const render = (): void => {
 	storageGet()
-
 	while (ideasContainer.firstChild) {
 		ideasContainer.firstChild.remove()
 	}
-
 	let sortedArray: Idea[] = [...ideas]
+
 	if (hideChecked) sortedArray = sortedArray.filter((idea: Idea) => !idea.checkBox)
 	if (ranked) sortedArray = sortedArray.sort((a: Idea, b: Idea) => b.rank - a.rank)
-
+	console.log(sortedArray)
 	sortedArray.forEach((idea: Idea, index: number): void => {
 		const ideaCardDiv = document.createElement('div') as HTMLDivElement
 		const interactionsDiv = document.createElement('div') as HTMLDivElement
 		const rankNumDiv = document.createElement('div') as HTMLDivElement
 		const rankDiv = document.createElement('div') as HTMLDivElement
-
 		const rankDown = document.createElement('img') as HTMLImageElement
+
 		const rankUp = document.createElement('img') as HTMLImageElement
 		const name = document.createElement('h2') as HTMLHeadingElement
 		const checkBox = document.createElement('input') as HTMLInputElement
@@ -68,8 +64,8 @@ const render = (): void => {
 		const rankNumber = document.createElement('h4') as HTMLHeadingElement
 		const description = document.createElement('h3') as HTMLHeadingElement
 		const deleteBtn = document.createElement('Button') as HTMLButtonElement
-
 		checkBox.type = 'checkbox'
+
 		name.textContent = idea.name
 		deleteBtn.textContent = 'Delete'
 		checkBox.checked = idea.checkBox
@@ -78,21 +74,20 @@ const render = (): void => {
 		description.textContent = idea.description
 		rankUp.src = 'assets/img/mdi_arrow-up-bold.svg'
 		rankDown.src = 'assets/img/mdi_arrow-down-bold.svg'
-
 		interactionsDiv.id = 'interactions'
+
 		ideaCardDiv.id = 'idea-card'
 		categoryLogo.id = 'c-logo'
 		rankNumDiv.id = 'rankNum'
 		checkBox.id = 'check'
 		rankDiv.id = 'rank'
-
 		checkBox.addEventListener('change', (): void => {
 			checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
 			idea.checkBox = !idea.checkBox
 			storageSet()
 		})
-		checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
 
+		checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
 		deleteBtn.addEventListener('click', (): void => {
 			ideas.splice(index, 1)
 			storageSet()
@@ -112,13 +107,13 @@ const render = (): void => {
 		})
 
 		rankNumDiv.append(rankNumber)
+
 		rankDiv.append(rankUp, rankDown)
 		interactionsDiv.append(rankNumDiv, rankDiv, deleteBtn)
 		ideaCardDiv.append(checkBox, categoryLogo, name, description, interactionsDiv)
 		ideasContainer.append(ideaCardDiv)
 	})
 }
-
 sortButton.addEventListener('click', () => {
 	ranked = !ranked
 	ranked
@@ -144,4 +139,9 @@ submitButton.addEventListener('click', (): void => {
 	render()
 })
 
+document.body.addEventListener('mousemove', function (e) {
+	;(cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px')
+})
+
+storageGet()
 render()
