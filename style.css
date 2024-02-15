@@ -40,7 +40,7 @@ body {
 #idea-container {
     padding: 30px;
     margin-left: 350px;
-    height: 100vh;
+    min-height: 100vh;
     width: auto;
     background-color: #1e1e1e;
 }
@@ -151,13 +151,14 @@ h4 {
     color: #171717;
 }
 
-#sort-rank {
-    position: absolute;
-    top: 4%;
-    right: 3%;
-}
 
 #sort-rank:active {
     background-color: #fafafa;
     color: #171717;
+}
+
+#sorting{
+    position: absolute;
+    top: 4%;
+    right: 3%;
 }

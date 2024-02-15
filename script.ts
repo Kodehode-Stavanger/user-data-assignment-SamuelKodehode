@@ -1,11 +1,12 @@
 const submitButton = document.getElementById('submit-button') as HTMLButtonElement
 const sortButton = document.getElementById('sort-rank') as HTMLButtonElement
+const checkedButton = document.getElementById('hide-checked') as HTMLButtonElement
 const logoShowcaseSelect = document.getElementById('category') as HTMLSelectElement
 const logoShowcase = document.getElementById('logo-showcase') as HTMLImageElement
 const ideasContainer = document.getElementById('idea-container') as HTMLDivElement
 let ideas: Idea[] = []
 let ranked = false
-
+let hideChecked = false
 type Idea = {
 	name: string
 	description: string
@@ -43,7 +44,9 @@ const render = (): void => {
 	ideasContainer.innerHTML = ''
 
 	//sorting
-	const rankedArray: Idea[] = ranked ? ideas.sort((a: Idea, b: Idea) => b.rank - a.rank) : ideas
+	let rankedArray: Idea[] = [...ideas]
+	if (hideChecked) rankedArray = rankedArray.filter((idea) => !idea.checkBox)
+	if (ranked) rankedArray = rankedArray.sort((a: Idea, b: Idea) => b.rank - a.rank)
 
 	rankedArray.forEach((idea: Idea, index: number): void => {
 		const ideaCardDiv = document.createElement('div') as HTMLDivElement
@@ -117,6 +120,15 @@ sortButton.addEventListener('click', () => {
 		: (sortButton.style.backgroundColor = 'rgb(126,126,126)')
 	render()
 })
+
+checkedButton.addEventListener('click', () => {
+	hideChecked = !hideChecked
+	hideChecked
+		? (checkedButton.style.backgroundColor = 'rgb(21,21,21)')
+		: (checkedButton.style.backgroundColor = 'rgb(126,126,126)')
+	render()
+})
+
 logoShowcaseSelect.addEventListener('change', (): void => {
 	logoShowcase.src = `/assets/img/${logoShowcaseSelect.value}.svg`
 })
