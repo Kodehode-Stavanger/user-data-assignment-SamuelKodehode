@@ -8,6 +8,7 @@ let cursor = document.getElementById('cursor') as HTMLDivElement
 let ideas: Idea[] = []
 let ranked = false
 let hideChecked = false
+
 type Idea = {
 	name: string
 	description: string
@@ -81,6 +82,7 @@ const render = (): void => {
 		rankNumDiv.id = 'rankNum'
 		checkBox.id = 'check'
 		rankDiv.id = 'rank'
+
 		checkBox.addEventListener('change', (): void => {
 			checkBox.checked ? (ideaCardDiv.style.opacity = '0.5') : (ideaCardDiv.style.opacity = '1')
 			idea.checkBox = !idea.checkBox
@@ -139,7 +141,7 @@ submitButton.addEventListener('click', (): void => {
 	render()
 })
 
-document.body.addEventListener('mousemove', function (e) {
+document.body.addEventListener('mousemove', (e: MouseEvent): void => {
 	;(cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px')
 })
 

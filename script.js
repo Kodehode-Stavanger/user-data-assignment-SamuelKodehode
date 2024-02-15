@@ -120,7 +120,7 @@ submitButton.addEventListener('click', () => {
     create();
     render();
 });
-document.body.addEventListener('mousemove', function (e) {
+document.body.addEventListener('mousemove', (e) => {
     ;
     (cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px');
 });
