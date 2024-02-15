@@ -31,8 +31,11 @@ const create = () => {
     document.getElementById('ideaDescription').value = '';
     render();
 };
-const draw = () => {
+const render = () => {
     storageGet();
+    while (ideasContainer.firstChild) {
+        ideasContainer.firstChild.remove();
+    }
     let sortedArray = [...ideas];
     if (hideChecked)
         sortedArray = sortedArray.filter((idea) => !idea.checkBox);
@@ -115,11 +118,5 @@ submitButton.addEventListener('click', () => {
     create();
     render();
 });
-function render() {
-    while (ideasContainer.firstChild) {
-        ideasContainer.firstChild.remove();
-    }
-    draw();
-}
 render();
 //# sourceMappingURL=script.js.map
