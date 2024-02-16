@@ -1,13 +1,13 @@
-const submitButton = document.getElementById('submit-button') as HTMLButtonElement
-const sortButton = document.getElementById('sort-rank') as HTMLButtonElement
-const checkedButton = document.getElementById('hide-checked') as HTMLButtonElement
 const logoShowcaseSelect = document.getElementById('category') as HTMLSelectElement
+const submitButton = document.getElementById('submit-button') as HTMLButtonElement
+const checkedButton = document.getElementById('hide-checked') as HTMLButtonElement
 const logoShowcase = document.getElementById('logo-showcase') as HTMLImageElement
 const ideasContainer = document.getElementById('idea-container') as HTMLDivElement
+const sortButton = document.getElementById('sort-rank') as HTMLButtonElement
 let cursor = document.getElementById('cursor') as HTMLDivElement
+let hideChecked: boolean = false
+let ranked: boolean = false
 let ideas: Idea[] = []
-let ranked = false
-let hideChecked = false
 
 type Idea = {
 	name: string
@@ -20,12 +20,14 @@ type Idea = {
 const storageSet = (): void => {
 	localStorage.setItem('savedIdeas', JSON.stringify(ideas))
 }
+
 const storageGet = (): void => {
 	const isStorage: string | null = localStorage.getItem('savedIdeas')
 	if (isStorage) {
 		ideas = JSON.parse(isStorage)
 	}
 }
+
 const create = (): void => {
 	const newIdea: Idea = {
 		name: (document.getElementById('ideaName') as HTMLInputElement).value,
@@ -41,32 +43,34 @@ const create = (): void => {
 	;(document.getElementById('ideaDescription') as HTMLTextAreaElement).value = ''
 	render()
 }
+
 const render = (): void => {
 	storageGet()
+
 	while (ideasContainer.firstChild) {
 		ideasContainer.firstChild.remove()
 	}
+
 	let sortedArray: Idea[] = [...ideas]
 
 	if (hideChecked) sortedArray = sortedArray.filter((idea: Idea) => !idea.checkBox)
 	if (ranked) sortedArray = sortedArray.sort((a: Idea, b: Idea) => b.rank - a.rank)
-	console.log(sortedArray)
+
 	sortedArray.forEach((idea: Idea, index: number): void => {
-		const ideaCardDiv = document.createElement('div') as HTMLDivElement
 		const interactionsDiv = document.createElement('div') as HTMLDivElement
+		const ideaCardDiv = document.createElement('div') as HTMLDivElement
 		const rankNumDiv = document.createElement('div') as HTMLDivElement
 		const rankDiv = document.createElement('div') as HTMLDivElement
-		const rankDown = document.createElement('img') as HTMLImageElement
-
 		const rankUp = document.createElement('img') as HTMLImageElement
 		const name = document.createElement('h2') as HTMLHeadingElement
+		const rankDown = document.createElement('img') as HTMLImageElement
 		const checkBox = document.createElement('input') as HTMLInputElement
 		const categoryLogo = document.createElement('img') as HTMLImageElement
 		const rankNumber = document.createElement('h4') as HTMLHeadingElement
 		const description = document.createElement('h3') as HTMLHeadingElement
 		const deleteBtn = document.createElement('Button') as HTMLButtonElement
-		checkBox.type = 'checkbox'
 
+		checkBox.type = 'checkbox'
 		name.textContent = idea.name
 		deleteBtn.textContent = 'Delete'
 		checkBox.checked = idea.checkBox
@@ -116,7 +120,8 @@ const render = (): void => {
 		ideasContainer.append(ideaCardDiv)
 	})
 }
-sortButton.addEventListener('click', () => {
+
+sortButton.addEventListener('click', (): void => {
 	ranked = !ranked
 	ranked
 		? (sortButton.style.backgroundColor = 'rgb(21,21,21)')
@@ -124,7 +129,7 @@ sortButton.addEventListener('click', () => {
 	render()
 })
 
-checkedButton.addEventListener('click', () => {
+checkedButton.addEventListener('click', (): void => {
 	hideChecked = !hideChecked
 	hideChecked
 		? (checkedButton.style.backgroundColor = 'rgb(21,21,21)')
@@ -143,6 +148,14 @@ submitButton.addEventListener('click', (): void => {
 
 document.body.addEventListener('mousemove', (e: MouseEvent): void => {
 	;(cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px')
+})
+
+document.body.addEventListener('mousedown', () => {
+	cursor.style.scale = '0.9'
+})
+
+document.body.addEventListener('mouseup', () => {
+	cursor.style.scale = '1'
 })
 
 storageGet()

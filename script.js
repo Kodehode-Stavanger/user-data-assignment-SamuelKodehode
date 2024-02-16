@@ -1,14 +1,14 @@
 "use strict";
-const submitButton = document.getElementById('submit-button');
-const sortButton = document.getElementById('sort-rank');
-const checkedButton = document.getElementById('hide-checked');
 const logoShowcaseSelect = document.getElementById('category');
+const submitButton = document.getElementById('submit-button');
+const checkedButton = document.getElementById('hide-checked');
 const logoShowcase = document.getElementById('logo-showcase');
 const ideasContainer = document.getElementById('idea-container');
+const sortButton = document.getElementById('sort-rank');
 let cursor = document.getElementById('cursor');
-let ideas = [];
-let ranked = false;
 let hideChecked = false;
+let ranked = false;
+let ideas = [];
 const storageSet = () => {
     localStorage.setItem('savedIdeas', JSON.stringify(ideas));
 };
@@ -42,15 +42,14 @@ const render = () => {
         sortedArray = sortedArray.filter((idea) => !idea.checkBox);
     if (ranked)
         sortedArray = sortedArray.sort((a, b) => b.rank - a.rank);
-    console.log(sortedArray);
     sortedArray.forEach((idea, index) => {
-        const ideaCardDiv = document.createElement('div');
         const interactionsDiv = document.createElement('div');
+        const ideaCardDiv = document.createElement('div');
         const rankNumDiv = document.createElement('div');
         const rankDiv = document.createElement('div');
-        const rankDown = document.createElement('img');
         const rankUp = document.createElement('img');
         const name = document.createElement('h2');
+        const rankDown = document.createElement('img');
         const checkBox = document.createElement('input');
         const categoryLogo = document.createElement('img');
         const rankNumber = document.createElement('h4');
@@ -123,6 +122,12 @@ submitButton.addEventListener('click', () => {
 document.body.addEventListener('mousemove', (e) => {
     ;
     (cursor.style.left = e.clientX + 'px'), (cursor.style.top = e.clientY + 'px');
+});
+document.body.addEventListener('mousedown', () => {
+    cursor.style.scale = '0.9';
+});
+document.body.addEventListener('mouseup', () => {
+    cursor.style.scale = '1';
 });
 storageGet();
 render();
