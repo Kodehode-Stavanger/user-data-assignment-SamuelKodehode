@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Fantastic Ideas</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Samuel">
+    <meta name="description" content="Ideas saver">
+    <meta name="keywords" content="HTML, CSS, Typescript">
+</head>
+<body>
+<div id="new-input">
+    <div id="header">
+        <h2>New Idea</h2>
+        <img id="logo-showcase" src='assets/img/Planet.svg' alt="planet"/>
+    </div>
+
+    <form id="form" action="#" method="post" enctype="multipart/form-data">
+        <label for="ideaName">Name of idea:</label>
+        <input class="inputs" type="text" id="ideaName" name="ideaName" required>
+
+        <label for="ideaDescription">Idea Description:</label>
+        <textarea class="inputs" id="ideaDescription" name="ideaDescription" rows="4" required></textarea>
+
+        <label for="category">Logo</label>
+        <select class="inputs" id="category" name="category" required>
+            <option class="option" value="Alien">Alien</option>
+            <option class="option" value="Car">Car</option>
+            <option class="option" value="Dracula">Dracula</option>
+            <option class="option" value="Fireball">Fireball</option>
+            <option class="option" value="Food">Food</option>
+            <option class="option" value="Hammer">Hammer</option>
+            <option class="option" value="PC">PC</option>
+            <option class="option" value="Pen">Pen</option>
+            <option class="option" value="Plane">Plane</option>
+            <option class="option" value="Planet">Planet</option>
+            <option class="option" value="Plant">Plant</option>
+            <option class="option" value="Star">Star</option>
+            <option class="option" value="Wand">Wand</option>
+            <option class="option" value="Wizard">Wizard</option>
+        </select>
+        <button id="submit-button">Submit</button>
+    </form>
+</div>
+
+<div id="sorting">
+    <button id="sort-rank">Sort: Rating</button>
+    <button id="hide-checked">Hide: Checked</button>
+</div>
+<div id="idea-container"></div>
+<div class='cursor' id="cursor"></div>
+<script src="script.js"></script>
+</body>
+</html>
